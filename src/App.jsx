@@ -2150,183 +2150,188 @@ const Dashboard = ({ onAlert, onReport, onProfile, onImpact, onChat }) => {
   return (
     <Screen direction="up">
       <div className={`min-h-screen pb-24 transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
-        style={{ background: 'linear-gradient(180deg, #E3F2FD 0%, #F7F8FA 25%, #F7F8FA 100%)' }}>
+        style={{ background: 'linear-gradient(180deg, #E3F2FD 0%, #F7F8FA 20%, #F7F8FA 100%)' }}>
         <FPLHeader />
-        <div className="px-5 pt-3 pb-1">
+        <div className="px-5 pt-3 pb-2">
           <SmartGreeting />
         </div>
 
-        {/* Shield Status Card */}
-        <div className="px-5 mb-3">
-          <ShieldStatusCard />
-        </div>
+        <Stagger delay={50}>
+          {/* Shield Status Card */}
+          <div className="px-5 mb-4">
+            <ShieldStatusCard />
+          </div>
 
-        {/* AI Insight Tip */}
-        <div className="px-5 mb-3">
-          <AITipCard />
-        </div>
+          {/* AI Insight Tip */}
+          <div className="px-5 mb-4">
+            <AITipCard />
+          </div>
 
-        {/* DR Banner or Trigger */}
-        <div className="px-5 mb-3">
-          {drEventPhase !== 'idle' ? (
-            <LiveDRBanner />
-          ) : (
-            <DRTriggerCard />
-          )}
-        </div>
+          {/* DR Banner or Trigger */}
+          <div className="px-5 mb-4">
+            {drEventPhase !== 'idle' ? <LiveDRBanner /> : <DRTriggerCard />}
+          </div>
 
-        {/* Equipment Health (things that are wrong) */}
-        <Section title="Equipment Health" action={`${HEALTH_ALERTS.length} active`}>
-          <Stagger delay={40}>
+          {/* Equipment Health */}
+          <div className="px-5 mb-5">
+            <div className="flex items-center justify-between mb-2.5">
+              <span style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Equipment Health</span>
+              <span style={{ fontSize: 11, color: C.red, fontWeight: 600 }}>{HEALTH_ALERTS.length} active</span>
+            </div>
             {HEALTH_ALERTS.slice(0, showAll ? HEALTH_ALERTS.length : 2).map(a => (
               <ExpandableAlert key={a.id} alert={a} onOpen={onAlert} />
             ))}
-          </Stagger>
-          {HEALTH_ALERTS.length > 2 && (
-            <Tap onClick={() => setShowAll(!showAll)} className="w-full mt-2 flex items-center justify-center gap-1 py-2 rounded-xl"
-              style={{ background: `${C.red}06` }}>
-              <span style={{ fontSize: 12, color: C.red, fontWeight: 600 }}>
-                {showAll ? 'Show less' : `View all ${HEALTH_ALERTS.length} health alerts`}
-              </span>
-              <ChevronDown size={14} color={C.red}
-                style={{ transform: showAll ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s ease' }} />
-            </Tap>
-          )}
-        </Section>
+            {HEALTH_ALERTS.length > 2 && (
+              <Tap onClick={() => setShowAll(!showAll)} className="w-full mt-2 flex items-center justify-center gap-1 py-2 rounded-xl"
+                style={{ background: `${C.red}06` }}>
+                <span style={{ fontSize: 11, color: C.red, fontWeight: 600 }}>
+                  {showAll ? 'Show less' : `View all ${HEALTH_ALERTS.length} alerts`}
+                </span>
+                <ChevronDown size={13} color={C.red}
+                  style={{ transform: showAll ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s ease' }} />
+              </Tap>
+            )}
+          </div>
 
-        {/* Usage Insights (behavioral optimization) */}
-        <Section title="Usage Insights" action={`${AI_INSIGHTS.length} tips`}>
-          <Stagger delay={40}>
+          {/* Usage Insights */}
+          <div className="px-5 mb-5">
+            <div className="flex items-center justify-between mb-2.5">
+              <span style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Usage Insights</span>
+              <span style={{ fontSize: 11, color: C.fplBlue, fontWeight: 600 }}>{AI_INSIGHTS.length} tips</span>
+            </div>
             {AI_INSIGHTS.slice(0, showInsights ? AI_INSIGHTS.length : 2).map(a => (
               <ExpandableAlert key={a.id} alert={a} onOpen={onAlert} />
             ))}
-          </Stagger>
-          {AI_INSIGHTS.length > 2 && (
-            <Tap onClick={() => setShowInsights(!showInsights)} className="w-full mt-2 flex items-center justify-center gap-1 py-2 rounded-xl"
-              style={{ background: `${C.fplBlue}06` }}>
-              <span style={{ fontSize: 12, color: C.fplBlue, fontWeight: 600 }}>
-                {showInsights ? 'Show less' : `View all ${AI_INSIGHTS.length} insights`}
-              </span>
-              <ChevronDown size={14} color={C.fplBlue}
-                style={{ transform: showInsights ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s ease' }} />
-            </Tap>
-          )}
-        </Section>
+            {AI_INSIGHTS.length > 2 && (
+              <Tap onClick={() => setShowInsights(!showInsights)} className="w-full mt-2 flex items-center justify-center gap-1 py-2 rounded-xl"
+                style={{ background: `${C.fplBlue}06` }}>
+                <span style={{ fontSize: 11, color: C.fplBlue, fontWeight: 600 }}>
+                  {showInsights ? 'Show less' : `View all ${AI_INSIGHTS.length} insights`}
+                </span>
+                <ChevronDown size={13} color={C.fplBlue}
+                  style={{ transform: showInsights ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s ease' }} />
+              </Tap>
+            )}
+          </div>
 
-        {/* Connected Devices */}
-        <Section title="Connected Devices" action="+ Add">
-          <GlassCard>
-            {dynamicDevices.map((d, i) => (
-              <Tap key={i} className="w-full flex items-center gap-3 px-4 py-3 text-left"
-                style={{ borderBottom: i < dynamicDevices.length - 1 ? `1px solid ${C.divider}` : 'none' }}>
-                <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 relative"
-                  style={{ background: `${C.fplBlue}0D` }}>
-                  <DevIcon type={d.type} size={18} />
-                  <div className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full flex items-center justify-center"
-                    style={{ background: d.controlled ? C.green : C.fplBlue, border: '2px solid white' }}>
-                    {d.controlled
-                      ? <Check size={7} color="#fff" strokeWidth={4} />
-                      : <div style={{ width: 4, height: 4, borderRadius: 2, background: '#fff' }} />
-                    }
+          {/* Connected Devices */}
+          <div className="px-5 mb-5">
+            <div className="flex items-center justify-between mb-2.5">
+              <span style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Connected Devices</span>
+              <span style={{ fontSize: 11, color: C.fplBlue, fontWeight: 600 }}>+ Add</span>
+            </div>
+            <GlassCard>
+              {dynamicDevices.map((d, i) => (
+                <Tap key={i} className="w-full flex items-center gap-3 px-4 py-2.5 text-left"
+                  style={{ borderBottom: i < dynamicDevices.length - 1 ? `1px solid ${C.divider}` : 'none' }}>
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 relative"
+                    style={{ background: `${C.fplBlue}0D` }}>
+                    <DevIcon type={d.type} size={16} />
+                    <div className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full flex items-center justify-center"
+                      style={{ background: d.controlled ? C.green : C.fplBlue, border: '1.5px solid white' }}>
+                      {d.controlled
+                        ? <Check size={6} color="#fff" strokeWidth={4} />
+                        : <div style={{ width: 3, height: 3, borderRadius: 2, background: '#fff' }} />
+                      }
+                    </div>
                   </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="truncate" style={{ fontSize: 13, fontWeight: 600, color: C.textPrimary }}>{d.name}</span>
+                      <span style={{
+                        fontSize: 11,
+                        color: d.type === 'thermostat' && drEventPhase !== 'idle' ? C.amber : C.textMuted,
+                        fontWeight: d.type === 'thermostat' && drEventPhase !== 'idle' ? 700 : 400,
+                      }}>{d.val}</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className="px-1.5 py-0.5 rounded" style={{
+                        fontSize: 8, fontWeight: 600,
+                        color: d.controlled ? C.green : C.fplBlue,
+                        background: d.controlled ? `${C.green}10` : `${C.fplBlue}10`,
+                      }}>{d.status}</span>
+                      <span style={{ fontSize: 10, color: C.textMuted }}>{d.kWh} kWh · {d.pct}%</span>
+                    </div>
+                  </div>
+                  <ChevronRight size={14} color={C.textMuted} />
+                </Tap>
+              ))}
+            </GlassCard>
+          </div>
+
+          {/* AI Assistant */}
+          <div className="px-5 mb-5">
+            <Tap onClick={onChat}>
+              <div className="rounded-xl p-3 flex items-center gap-3"
+                style={{ background: 'linear-gradient(135deg, #0A1628 0%, #132B44 100%)' }}>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                  style={{ background: `linear-gradient(135deg, ${C.fplBlue}, ${C.purple})` }}>
+                  <Zap size={14} color="#fff" />
+                </div>
+                <div className="flex-1">
+                  <div style={{ fontSize: 12, fontWeight: 700, color: '#fff' }}>FPL Energy Assistant</div>
+                  <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 1 }}>"Why is my bill up?" · "Help me save"</div>
+                </div>
+                <ChevronRight size={14} color="rgba(255,255,255,0.2)" />
+              </div>
+            </Tap>
+          </div>
+
+          {/* Your FPL Programs */}
+          <div className="px-5 mb-5">
+            <div className="flex items-center justify-between mb-2.5">
+              <span style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Your FPL Programs</span>
+            </div>
+            <GlassCard className="overflow-hidden">
+              {[
+                {n:'FPL On Call® Savings', s:'Enrolled', credit:'$5/mo credit', c:C.green, active:true},
+                {n:'FPL Budget Billing®', s:'–', c:C.textMuted, active:false},
+              ].map((p, i) => (
+                <div key={i} className="flex items-center justify-between px-4 py-2.5" style={{ borderBottom: i < 1 ? `1px solid ${C.divider}` : 'none' }}>
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: p.active ? `${C.green}10` : C.bg }}>
+                      {p.active ? <Check size={11} color={C.green} strokeWidth={3} /> : <div style={{ width: 4, height: 4, borderRadius: 2, background: C.textMuted, opacity: 0.4 }} />}
+                    </div>
+                    <div>
+                      <span style={{ fontSize: 12, fontWeight: 600, color: C.textPrimary }}>{p.n}</span>
+                      {p.credit && <div style={{ fontSize: 10, color: C.green, fontWeight: 600 }}>{p.credit}</div>}
+                    </div>
+                  </div>
+                  <Pill color={p.c}>{p.s}</Pill>
+                </div>
+              ))}
+            </GlassCard>
+          </div>
+
+          {/* Recommended */}
+          <div className="px-5 mb-5">
+            <div style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>Recommended For You</div>
+            {[
+              {n:'FPL SurgeShield®', why:'3 surge events near you this month', cta:'$11.95/mo', color: C.red, icon: Shield},
+              {n:'FPL HVAC-on-Bill®', why:'AC efficiency declining — from $42/mo', cta:'Learn More', color: C.fplBlue, icon: Thermometer},
+              {n:'FPL SolarTogether®', why:'Community solar · Earn bill credits', cta:'Estimate', color: C.orange, icon: Sun},
+              {n:'FPL EVolution®', why:'Optimize Tesla charging · Earn credits', cta:'Enroll', color: C.fplDark, icon: Car},
+            ].map((r, i) => (
+              <GlassCard key={i} className="p-3 mb-2 flex items-center gap-2.5" gradient>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: `${r.color}0D` }}>
+                  <r.icon size={14} color={r.color} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="truncate" style={{ fontSize: 13, fontWeight: 600, color: C.textPrimary }}>{d.name}</span>
-                    <span style={{
-                      fontSize: 12,
-                      color: d.type === 'thermostat' && drEventPhase !== 'idle' ? C.amber : C.textMuted,
-                      fontWeight: d.type === 'thermostat' && drEventPhase !== 'idle' ? 700 : 400,
-                      transition: 'all 0.3s ease',
-                    }}>{d.val}</span>
-                  </div>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="px-1.5 py-0.5 rounded text-center" style={{
-                      fontSize: 9, fontWeight: 600,
-                      color: d.controlled ? C.green : C.fplBlue,
-                      background: d.controlled ? `${C.green}10` : `${C.fplBlue}10`,
-                    }}>{d.status}</span>
-                    <span style={{ fontSize: 11, color: C.textMuted }}>{d.kWh} kWh · {d.pct}%</span>
-                  </div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: C.textPrimary }}>{r.n}</div>
+                  <div style={{ fontSize: 10, color: C.textMuted, marginTop: 1 }}>{r.why}</div>
                 </div>
-                <ChevronRight size={16} color={C.textMuted} />
-              </Tap>
+                <span className="flex-shrink-0 px-2 py-1 rounded-lg font-bold"
+                  style={{ background: `${r.color}0D`, color: r.color, fontSize: 9 }}>
+                  {r.cta}
+                </span>
+              </GlassCard>
             ))}
-          </GlassCard>
-        </Section>
+          </div>
 
-        {/* AI Assistant Entry Point */}
-        <div className="px-5 mb-5">
-          <Tap onClick={onChat}>
-            <div className="rounded-xl p-3.5 flex items-center gap-3"
-              style={{
-                background: 'linear-gradient(135deg, #0A1628 0%, #132B44 100%)',
-                boxShadow: '0 2px 12px rgba(10,22,40,0.3)',
-              }}>
-              <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{ background: `linear-gradient(135deg, ${C.fplBlue}, ${C.purple})` }}>
-                <Zap size={15} color="#fff" />
-              </div>
-              <div className="flex-1">
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>FPL Energy Assistant</div>
-                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', marginTop: 1 }}>"Why is my bill up?" · "Is my AC okay?"</div>
-              </div>
-              <ChevronRight size={16} color="rgba(255,255,255,0.25)" />
-            </div>
-          </Tap>
-        </div>
-
-        {/* FPL Programs — Enrolled */}
-        <Section title="Your FPL Programs">
-          <GlassCard className="overflow-hidden">
-            {[
-              {n:'FPL On Call® Savings', s:'Enrolled', credit:'$5/mo credit', c:C.green, active:true},
-              {n:'FPL Budget Billing®', s:'–', c:C.textMuted, active:false},
-            ].map((p, i) => (
-              <div key={i} className="flex items-center justify-between px-4 py-3" style={{ borderBottom: i < 1 ? `1px solid ${C.divider}` : 'none' }}>
-                <div className="flex items-center gap-3">
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: p.active ? `${C.green}10` : C.bg }}>
-                    {p.active ? <Check size={12} color={C.green} strokeWidth={3} /> : <div style={{ width: 5, height: 5, borderRadius: 3, background: C.textMuted, opacity: 0.4 }} />}
-                  </div>
-                  <div>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: C.textPrimary }}>{p.n}</span>
-                    {p.credit && <div style={{ fontSize: 10, color: C.green, fontWeight: 600, marginTop: 1 }}>{p.credit}</div>}
-                  </div>
-                </div>
-                <Pill color={p.c}>{p.s}</Pill>
-              </div>
-            ))}
-          </GlassCard>
-        </Section>
-
-        {/* FPL Programs — Recommended */}
-        <Section title="Recommended For You">
-          {[
-            {n:'FPL SurgeShield®', why:'3 surge events near you this month', cta:'$11.95/mo', color: C.red, icon: Shield},
-            {n:'FPL HVAC-on-Bill®', why:'Your AC efficiency is declining — upgrade from $42/mo', cta:'Learn More', color: C.fplBlue, icon: Thermometer},
-            {n:'FPL SolarTogether®', why:'Community solar · Earn monthly bill credits', cta:'See Estimate', color: C.orange, icon: Sun},
-            {n:'FPL EVolution®', why:'Optimize Tesla charging and earn credits', cta:'Enroll Free', color: C.fplDark, icon: Car},
-          ].map((r, i) => (
-            <GlassCard key={i} className="p-3.5 mb-2 flex items-center gap-3" gradient>
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${r.color}0D` }}>
-                <r.icon size={16} color={r.color} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div style={{ fontSize: 12, fontWeight: 600, color: C.textPrimary }}>{r.n}</div>
-                <div style={{ fontSize: 10, color: C.textMuted, marginTop: 1 }}>{r.why}</div>
-              </div>
-              <span className="flex-shrink-0 px-2.5 py-1 rounded-lg text-xs font-bold"
-                style={{ background: `${r.color}0D`, color: r.color, fontSize: 10 }}>
-                {r.cta}
-              </span>
-            </GlassCard>
-          ))}
-        </Section>
-
-        {/* Footer */}
-        <div className="text-center pb-4 mt-2">
-          <div style={{ fontSize: 10, color: C.textMuted }}>Florida Power & Light Company · A NextEra Energy® Company</div>
-        </div>
+          <div className="text-center pb-4">
+            <div style={{ fontSize: 10, color: C.textMuted }}>Florida Power & Light Company · A NextEra Energy® Company</div>
+          </div>
+        </Stagger>
         <BottomNav active="Home" onNav={t => { if(t==='Account') onProfile?.(); if(t==='Usage') onReport?.(); if(t==='Impact') onImpact?.(); }} />
       </div>
     </Screen>

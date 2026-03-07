@@ -927,8 +927,8 @@ const ShieldActivation = ({ onActivate, enabledDeviceIds = [] }) => {
 
   return (
     <Screen direction="up">
-      <div className="min-h-screen flex flex-col items-center justify-center px-8"
-        style={{ background: 'linear-gradient(180deg, #E6F4FA 0%, #FFFFFF 50%, #F7F8FA 100%)' }}>
+      <div className="min-h-screen flex flex-col items-center px-8"
+        style={{ background: 'linear-gradient(180deg, #E6F4FA 0%, #FFFFFF 50%, #F7F8FA 100%)', paddingTop: '28vh' }}>
 
         {/* Shield + Home visual */}
         <div style={{
@@ -1162,14 +1162,15 @@ const DemoControlPanel = () => {
     <>
       {/* FAB */}
       <Tap onClick={() => setOpen(true)}
-        className="fixed z-50 w-12 h-12 rounded-full flex items-center justify-center"
+        className="fixed z-50 w-10 h-10 rounded-full flex items-center justify-center"
         style={{
-          bottom: 96,
-          right: 16,
+          bottom: 80,
+          right: 14,
           background: `linear-gradient(135deg, ${C.fplBlue}, ${C.fplDark})`,
-          boxShadow: '0 4px 20px rgba(0,155,222,0.4)',
+          boxShadow: '0 2px 12px rgba(0,155,222,0.3)',
+          opacity: 0.7,
         }}>
-        <Settings size={20} color="#fff" />
+        <Settings size={16} color="#fff" />
       </Tap>
 
       {/* Backdrop + Panel */}
@@ -1738,21 +1739,20 @@ const AIChatAgent = ({ onClose }) => {
 /* ─── AI CHAT FAB (floating button) ─── */
 const AIChatFAB = ({ onClick }) => (
   <Tap onClick={onClick}
-    className="fixed z-50 flex items-center gap-2 rounded-2xl px-4 py-3"
+    className="fixed z-50 flex items-center gap-1.5 rounded-full px-3 py-2"
     style={{
-      bottom: 96,
-      left: 16,
-      background: 'linear-gradient(135deg, #0A1628 0%, #132B44 100%)',
-      boxShadow: '0 4px 24px rgba(10,22,40,0.5), 0 0 0 1px rgba(255,255,255,0.06)',
+      bottom: 80,
+      left: 14,
+      background: 'rgba(10,22,40,0.65)',
+      backdropFilter: 'blur(12px)',
+      WebkitBackdropFilter: 'blur(12px)',
+      boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
     }}>
-    <div className="w-8 h-8 rounded-xl flex items-center justify-center"
+    <div className="w-6 h-6 rounded-full flex items-center justify-center"
       style={{ background: `linear-gradient(135deg, ${C.fplBlue}, ${C.purple})` }}>
-      <Zap size={14} color="#fff" />
+      <Zap size={11} color="#fff" />
     </div>
-    <div>
-      <div style={{ fontSize: 12, fontWeight: 700, color: '#fff', lineHeight: 1 }}>Ask AI</div>
-      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', marginTop: 1 }}>FPL Assistant</div>
-    </div>
+    <span style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.85)' }}>Ask AI</span>
   </Tap>
 );
 
@@ -2606,14 +2606,14 @@ export default function App() {
         {chatOpen && <AIChatAgent onClose={() => setChatOpen(false)} />}
 
         {/* Screen nav dots */}
-        <div className="fixed top-2 right-3 z-50 flex items-center gap-1.5 rounded-full px-2.5 py-2"
-          style={{ background: 'rgba(247,248,250,0.85)', backdropFilter: 'blur(12px)', boxShadow: '0 1px 8px rgba(0,0,0,0.06)' }}>
+        <div className="fixed top-2 right-2 z-50 flex items-center gap-1 rounded-full px-2 py-1.5"
+          style={{ background: 'rgba(247,248,250,0.75)', backdropFilter: 'blur(12px)', boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }}>
           {['splash','value','platforms','devices','shield','dashboard','report','profile','impact'].map(s => (
             <Tap key={s} onClick={() => go(s)} className="rounded-full"
               style={{
-                width: screen === s ? 18 : 5, height: 5,
+                width: screen === s ? 14 : 4, height: 4,
                 background: screen === s ? C.fplBlue : '#C8CED6',
-                borderRadius: 3, transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                borderRadius: 2, transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               }} title={s} />
           ))}
         </div>

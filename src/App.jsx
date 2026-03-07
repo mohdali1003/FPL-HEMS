@@ -240,7 +240,7 @@ const Screen = ({ children, direction = 'right' }) => {
   return (
     <div style={{
       opacity: mounted ? 1 : 0,
-      transform: mounted ? 'translate(0, 0)' : from,
+      transform: mounted ? 'none' : from,
       transition: 'opacity 0.35s ease, transform 0.35s ease',
       minHeight: '100vh',
     }}>
@@ -880,7 +880,7 @@ const SmartGreeting = ({ name = "Mohammad" }) => {
   if (hour >= 17) { greeting = 'Good Evening'; emoji = '🌙'; }
   return (
     <div>
-      <h1 style={{ fontSize: 26, fontWeight: 300, color: C.textPrimary }}>{greeting} {emoji}</h1>
+      <h1 style={{ fontSize: 22, fontWeight: 300, color: C.textPrimary }}>{greeting} {emoji}</h1>
       <div className="flex items-center gap-2 mt-1.5">
         <LiveUsage watts={1247} />
       </div>
@@ -1020,21 +1020,21 @@ const ShieldStatusCard = () => {
       <div className="flex items-center justify-around px-4 py-4">
         <div className="text-center">
           <div style={{ fontSize: 10, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.04em', fontWeight: 600 }}>This Month</div>
-          <div style={{ fontSize: 22, fontWeight: 700, color: C.textPrimary, marginTop: 4 }}>
+          <div style={{ fontSize: 18, fontWeight: 700, color: C.textPrimary, marginTop: 3 }}>
             <AnimNum value={1247} /><span style={{ fontSize: 11, fontWeight: 400, color: C.textMuted }}> kWh</span>
           </div>
         </div>
         <div style={{ width: 1, height: 36, background: C.divider }} />
         <div className="text-center">
           <div style={{ fontSize: 10, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.04em', fontWeight: 600 }}>Est. Bill</div>
-          <div style={{ fontSize: 22, fontWeight: 700, color: C.textPrimary, marginTop: 4 }}>
+          <div style={{ fontSize: 18, fontWeight: 700, color: C.textPrimary, marginTop: 3 }}>
             $<AnimNum value={142.30} decimals={2} />
           </div>
         </div>
         <div style={{ width: 1, height: 36, background: C.divider }} />
         <div className="text-center">
           <div style={{ fontSize: 10, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.04em', fontWeight: 600 }}>Alerts</div>
-          <div style={{ fontSize: 22, fontWeight: 700, color: C.red, marginTop: 4 }}>
+          <div style={{ fontSize: 18, fontWeight: 700, color: C.red, marginTop: 3 }}>
             <AnimNum value={HEALTH_ALERTS.length} />
           </div>
         </div>
@@ -2357,7 +2357,7 @@ const Report = ({ onBack, onNav }) => {
           <Tap onClick={onBack} className="flex items-center gap-1 mb-4">
             <ChevronLeft size={18} color={C.fplBlue} /><span style={{ fontSize: 13, color: C.fplBlue, fontWeight: 500 }}>Back to Dashboard</span>
           </Tap>
-          <h1 style={{ fontSize: 24, fontWeight: 300, color: C.textPrimary }}>Monthly Energy Report</h1>
+          <h1 style={{ fontSize: 20, fontWeight: 300, color: C.textPrimary }}>Monthly Energy Report</h1>
           <p style={{ fontSize: 13, color: C.textMuted, marginTop: 4 }}>January 2026 · Account #4821-7390</p>
         </div>
 
@@ -2582,7 +2582,7 @@ export default function App() {
 
   return (
     <DemoProvider>
-      <div className="w-full max-w-md mx-auto min-h-screen relative overflow-x-hidden"
+      <div className="w-full max-w-md mx-auto min-h-screen relative"
         style={{ background: C.bg, fontFamily: "-apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" }}>
         <GlobalStyles />
         <ToastContainer />

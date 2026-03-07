@@ -412,10 +412,10 @@ const Pill = ({ children, color = C.fplBlue }) => (
 );
 
 const Section = ({ title, children, action, onAction }) => (
-  <div className="px-5 mb-7">
-    <div className="flex items-center justify-between mb-3">
-      <span style={{ fontSize: 12, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{title}</span>
-      {action && <Tap onClick={onAction}><span style={{ fontSize: 12, color: C.fplBlue, fontWeight: 600 }}>{action}</span></Tap>}
+  <div className="px-5 mb-5">
+    <div className="flex items-center justify-between mb-2.5">
+      <span style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{title}</span>
+      {action && <Tap onClick={onAction}><span style={{ fontSize: 11, color: C.fplBlue, fontWeight: 600 }}>{action}</span></Tap>}
     </div>
     {children}
   </div>
@@ -746,7 +746,7 @@ const MeterReadChart = () => {
   const maxVal = Math.max(...reads) * 1.1;
   const totalKwh = reads.reduce((s, v) => s + v, 0).toFixed(1);
   const peakHr = reads.indexOf(Math.max(...reads));
-  const chartH = 140;
+  const chartH = 120;
   const chartW = 300;
 
   // Build smooth area path
@@ -1739,20 +1739,15 @@ const AIChatAgent = ({ onClose }) => {
 /* ─── AI CHAT FAB (floating button) ─── */
 const AIChatFAB = ({ onClick }) => (
   <Tap onClick={onClick}
-    className="fixed z-50 flex items-center gap-1.5 rounded-full px-3 py-2"
+    className="fixed z-50 w-9 h-9 rounded-full flex items-center justify-center"
     style={{
-      bottom: 80,
+      bottom: 76,
       left: 14,
-      background: 'rgba(10,22,40,0.65)',
-      backdropFilter: 'blur(12px)',
-      WebkitBackdropFilter: 'blur(12px)',
-      boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
+      background: 'rgba(0,0,0,0.25)',
+      backdropFilter: 'blur(8px)',
+      WebkitBackdropFilter: 'blur(8px)',
     }}>
-    <div className="w-6 h-6 rounded-full flex items-center justify-center"
-      style={{ background: `linear-gradient(135deg, ${C.fplBlue}, ${C.purple})` }}>
-      <Zap size={11} color="#fff" />
-    </div>
-    <span style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.85)' }}>Ask AI</span>
+    <Zap size={14} color="rgba(255,255,255,0.8)" />
   </Tap>
 );
 
@@ -2157,22 +2152,22 @@ const Dashboard = ({ onAlert, onReport, onProfile, onImpact, onChat }) => {
       <div className={`min-h-screen pb-24 transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
         style={{ background: 'linear-gradient(180deg, #E3F2FD 0%, #F7F8FA 25%, #F7F8FA 100%)' }}>
         <FPLHeader />
-        <div className="px-5 pt-4 pb-2">
+        <div className="px-5 pt-3 pb-1">
           <SmartGreeting />
         </div>
 
-        {/* Shield Status Card (replaces HEMS Status) */}
-        <div className="px-5 mb-4">
+        {/* Shield Status Card */}
+        <div className="px-5 mb-3">
           <ShieldStatusCard />
         </div>
 
         {/* AI Insight Tip */}
-        <div className="px-5 mb-4">
+        <div className="px-5 mb-3">
           <AITipCard />
         </div>
 
         {/* DR Banner or Trigger */}
-        <div className="px-5 mb-4">
+        <div className="px-5 mb-3">
           {drEventPhase !== 'idle' ? (
             <LiveDRBanner />
           ) : (
@@ -2222,7 +2217,7 @@ const Dashboard = ({ onAlert, onReport, onProfile, onImpact, onChat }) => {
         <Section title="Connected Devices" action="+ Add">
           <GlassCard>
             {dynamicDevices.map((d, i) => (
-              <Tap key={i} className="w-full flex items-center gap-3 px-4 py-3.5 text-left"
+              <Tap key={i} className="w-full flex items-center gap-3 px-4 py-3 text-left"
                 style={{ borderBottom: i < dynamicDevices.length - 1 ? `1px solid ${C.divider}` : 'none' }}>
                 <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 relative"
                   style={{ background: `${C.fplBlue}0D` }}>
@@ -2237,7 +2232,7 @@ const Dashboard = ({ onAlert, onReport, onProfile, onImpact, onChat }) => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="truncate" style={{ fontSize: 14, fontWeight: 600, color: C.textPrimary }}>{d.name}</span>
+                    <span className="truncate" style={{ fontSize: 13, fontWeight: 600, color: C.textPrimary }}>{d.name}</span>
                     <span style={{
                       fontSize: 12,
                       color: d.type === 'thermostat' && drEventPhase !== 'idle' ? C.amber : C.textMuted,
@@ -2263,20 +2258,20 @@ const Dashboard = ({ onAlert, onReport, onProfile, onImpact, onChat }) => {
         {/* AI Assistant Entry Point */}
         <div className="px-5 mb-5">
           <Tap onClick={onChat}>
-            <div className="rounded-2xl p-4 flex items-center gap-3"
+            <div className="rounded-xl p-3.5 flex items-center gap-3"
               style={{
                 background: 'linear-gradient(135deg, #0A1628 0%, #132B44 100%)',
-                boxShadow: '0 4px 24px rgba(10,22,40,0.4), 0 0 0 1px rgba(255,255,255,0.04)',
+                boxShadow: '0 2px 12px rgba(10,22,40,0.3)',
               }}>
-              <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: `linear-gradient(135deg, ${C.fplBlue}, ${C.purple})`, boxShadow: '0 4px 12px rgba(0,155,222,0.25)' }}>
-                <Zap size={18} color="#fff" />
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ background: `linear-gradient(135deg, ${C.fplBlue}, ${C.purple})` }}>
+                <Zap size={15} color="#fff" />
               </div>
               <div className="flex-1">
-                <div style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>FPL Energy Assistant</div>
-                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginTop: 2 }}>"Why is my bill up?" · "Is my AC okay?" · "Help me save"</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>FPL Energy Assistant</div>
+                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)', marginTop: 1 }}>"Why is my bill up?" · "Is my AC okay?"</div>
               </div>
-              <ChevronRight size={18} color="rgba(255,255,255,0.3)" />
+              <ChevronRight size={16} color="rgba(255,255,255,0.25)" />
             </div>
           </Tap>
         </div>
@@ -2288,14 +2283,14 @@ const Dashboard = ({ onAlert, onReport, onProfile, onImpact, onChat }) => {
               {n:'FPL On Call® Savings', s:'Enrolled', credit:'$5/mo credit', c:C.green, active:true},
               {n:'FPL Budget Billing®', s:'–', c:C.textMuted, active:false},
             ].map((p, i) => (
-              <div key={i} className="flex items-center justify-between px-4 py-3.5" style={{ borderBottom: i < 1 ? `1px solid ${C.divider}` : 'none' }}>
+              <div key={i} className="flex items-center justify-between px-4 py-3" style={{ borderBottom: i < 1 ? `1px solid ${C.divider}` : 'none' }}>
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: p.active ? `${C.green}10` : C.bg }}>
-                    {p.active ? <Check size={14} color={C.green} strokeWidth={3} /> : <div style={{ width: 6, height: 6, borderRadius: 3, background: C.textMuted, opacity: 0.4 }} />}
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: p.active ? `${C.green}10` : C.bg }}>
+                    {p.active ? <Check size={12} color={C.green} strokeWidth={3} /> : <div style={{ width: 5, height: 5, borderRadius: 3, background: C.textMuted, opacity: 0.4 }} />}
                   </div>
                   <div>
-                    <span style={{ fontSize: 13, fontWeight: 600, color: C.textPrimary }}>{p.n}</span>
-                    {p.credit && <div style={{ fontSize: 11, color: C.green, fontWeight: 600, marginTop: 1 }}>{p.credit}</div>}
+                    <span style={{ fontSize: 12, fontWeight: 600, color: C.textPrimary }}>{p.n}</span>
+                    {p.credit && <div style={{ fontSize: 10, color: C.green, fontWeight: 600, marginTop: 1 }}>{p.credit}</div>}
                   </div>
                 </div>
                 <Pill color={p.c}>{p.s}</Pill>
@@ -2312,16 +2307,16 @@ const Dashboard = ({ onAlert, onReport, onProfile, onImpact, onChat }) => {
             {n:'FPL SolarTogether®', why:'Community solar · Earn monthly bill credits', cta:'See Estimate', color: C.orange, icon: Sun},
             {n:'FPL EVolution®', why:'Optimize Tesla charging and earn credits', cta:'Enroll Free', color: C.fplDark, icon: Car},
           ].map((r, i) => (
-            <GlassCard key={i} className="p-4 mb-2.5 flex items-center gap-3" gradient>
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${r.color}0D` }}>
-                <r.icon size={18} color={r.color} />
+            <GlassCard key={i} className="p-3.5 mb-2 flex items-center gap-3" gradient>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${r.color}0D` }}>
+                <r.icon size={16} color={r.color} />
               </div>
-              <div className="flex-1">
-                <div style={{ fontSize: 13, fontWeight: 600, color: C.textPrimary }}>{r.n}</div>
-                <div style={{ fontSize: 11, color: C.textMuted, marginTop: 2 }}>{r.why}</div>
+              <div className="flex-1 min-w-0">
+                <div style={{ fontSize: 12, fontWeight: 600, color: C.textPrimary }}>{r.n}</div>
+                <div style={{ fontSize: 10, color: C.textMuted, marginTop: 1 }}>{r.why}</div>
               </div>
-              <span className="flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold"
-                style={{ background: `${r.color}0D`, color: r.color }}>
+              <span className="flex-shrink-0 px-2.5 py-1 rounded-lg text-xs font-bold"
+                style={{ background: `${r.color}0D`, color: r.color, fontSize: 10 }}>
                 {r.cta}
               </span>
             </GlassCard>
@@ -2349,40 +2344,72 @@ const Report = ({ onBack, onNav }) => {
     {n:'Water Heater',pct:12,kWh:67,color:C.green},
     {n:'Other',pct:14,kWh:78,color:C.textMuted}
   ];
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => { setTimeout(() => setLoaded(true), 50); }, []);
+
   return (
     <Screen direction="right">
-      <div className="min-h-screen pb-24" style={{ background: C.bg }}>
+      <div className={`min-h-screen pb-24 transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+        style={{ background: C.bg }}>
         <FPLHeader />
         <div className="px-5 pt-4">
-          <Tap onClick={onBack} className="flex items-center gap-1 mb-4">
-            <ChevronLeft size={18} color={C.fplBlue} /><span style={{ fontSize: 13, color: C.fplBlue, fontWeight: 500 }}>Back to Dashboard</span>
+          <Tap onClick={onBack} className="flex items-center gap-1 mb-3">
+            <ChevronLeft size={18} color={C.fplBlue} /><span style={{ fontSize: 13, color: C.fplBlue, fontWeight: 500 }}>Back</span>
           </Tap>
-          <h1 style={{ fontSize: 20, fontWeight: 300, color: C.textPrimary }}>Monthly Energy Report</h1>
-          <p style={{ fontSize: 13, color: C.textMuted, marginTop: 4 }}>January 2026 · Account #4821-7390</p>
+          <h1 style={{ fontSize: 22, fontWeight: 300, color: C.textPrimary }}>Monthly Energy Report</h1>
+          <p style={{ fontSize: 13, color: C.textMuted, marginTop: 4, marginBottom: 16 }}>January 2026 · Account #4821-7390</p>
         </div>
 
-        <Stagger delay={70} className="px-5 mt-6">
-          {/* Shield Score - Circular Gauge */}
-          <GlassCard className="p-5 mb-5" borderLeft gradient>
-            <div className="flex items-center gap-5">
-              <ScoreGauge score={78} size={110} />
-              <div className="flex-1">
-                <div style={{ fontSize: 10, color: C.textMuted, textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.06em' }}>Your Shield Score</div>
-                <div className="flex items-center gap-2 mt-2">
-                  <div className="flex items-center gap-1 px-2.5 py-1 rounded-full" style={{ background: C.greenLight }}>
-                    <TrendingUp size={12} color={C.green} />
-                    <span style={{ fontSize: 11, fontWeight: 700, color: C.green }}>+4 pts</span>
+        <Stagger delay={60}>
+          {/* Shield Score */}
+          <div className="px-5 mb-5">
+            <GlassCard className="p-4" borderLeft gradient>
+              <div className="flex items-center gap-4">
+                <ScoreGauge score={78} size={85} />
+                <div className="flex-1">
+                  <div style={{ fontSize: 10, color: C.textMuted, textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.06em' }}>Your Shield Score</div>
+                  <div className="flex items-center gap-2 mt-2">
+                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-full" style={{ background: C.greenLight }}>
+                      <TrendingUp size={11} color={C.green} />
+                      <span style={{ fontSize: 10, fontWeight: 700, color: C.green }}>+4 pts</span>
+                    </div>
                   </div>
+                  <p className="mt-2" style={{ fontSize: 11, color: C.textMuted, lineHeight: 1.4 }}>More efficient than 72% of similar FPL homes.</p>
                 </div>
-                <p className="mt-2" style={{ fontSize: 12, color: C.textMuted, lineHeight: 1.4 }}>More efficient than 72% of similar FPL homes.</p>
               </div>
-            </div>
-          </GlassCard>
+            </GlassCard>
+          </div>
+
+          {/* Month at a Glance */}
+          <div className="px-5 mb-5">
+            <GlassCard className="overflow-hidden" gradient>
+              <div className="flex justify-between px-4 py-3.5">
+                <div className="text-center flex-1">
+                  <div style={{ fontSize: 20, fontWeight: 700, color: C.textPrimary }}><AnimNum value={1247} /></div>
+                  <div style={{ fontSize: 10, color: C.textMuted, marginTop: 2, textTransform: 'uppercase', fontWeight: 600 }}>kWh used</div>
+                </div>
+                <div style={{ width: 1, background: C.divider, alignSelf: 'stretch' }} />
+                <div className="text-center flex-1">
+                  <div style={{ fontSize: 20, fontWeight: 700, color: C.green }}>-8%</div>
+                  <div style={{ fontSize: 10, color: C.textMuted, marginTop: 2, textTransform: 'uppercase', fontWeight: 600 }}>vs Dec</div>
+                </div>
+                <div style={{ width: 1, background: C.divider, alignSelf: 'stretch' }} />
+                <div className="text-center flex-1">
+                  <div style={{ fontSize: 20, fontWeight: 700, color: C.textPrimary }}>$<AnimNum value={142} /></div>
+                  <div style={{ fontSize: 10, color: C.textMuted, marginTop: 2, textTransform: 'uppercase', fontWeight: 600 }}>Est. Bill</div>
+                </div>
+              </div>
+              <div className="px-4 py-2.5 flex items-center gap-2" style={{ borderTop: `1px solid ${C.divider}`, background: 'rgba(230,247,237,0.5)' }}>
+                <TrendingDown size={13} color={C.green} />
+                <span style={{ fontSize: 11, color: C.green, fontWeight: 600 }}>You used 12% less than similar homes</span>
+              </div>
+            </GlassCard>
+          </div>
 
           {/* Achievement Badges */}
-          <div className="mb-5">
-            <div style={{ fontSize: 12, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>Achievements</div>
-            <div className="flex gap-2.5 overflow-x-auto pb-1" style={{ scrollSnapType: 'x mandatory' }}>
+          <div className="px-5 mb-5">
+            <div style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>Achievements</div>
+            <div className="flex gap-2 overflow-x-auto pb-1" style={{ scrollSnapType: 'x mandatory' }}>
               <AchievementBadge icon="🔥" title="7-Day Saver" earned={true} delay={0} />
               <AchievementBadge icon="⚡" title="Peak Pro" earned={true} delay={100} />
               <AchievementBadge icon="🌱" title="Eco Hero" earned={true} delay={200} />
@@ -2392,95 +2419,76 @@ const Report = ({ onBack, onNav }) => {
           </div>
 
           {/* Social Comparison */}
-          <div className="mb-5">
+          <div className="px-5 mb-5">
             <ComparisonCard />
           </div>
 
-          {/* Month at a Glance */}
-          <GlassCard className="mb-5 overflow-hidden" gradient>
-            <div className="flex justify-between px-4 py-4">
-              <div className="text-center flex-1">
-                <div style={{ fontSize: 24, fontWeight: 700, color: C.textPrimary }}><AnimNum value={1247} /></div>
-                <div style={{ fontSize: 10, color: C.textMuted, marginTop: 2, textTransform: 'uppercase', fontWeight: 600 }}>kWh used</div>
-              </div>
-              <div style={{ width: 1, background: C.divider, alignSelf: 'stretch' }} />
-              <div className="text-center flex-1">
-                <div style={{ fontSize: 24, fontWeight: 700, color: C.green }}>-8%</div>
-                <div style={{ fontSize: 10, color: C.textMuted, marginTop: 2, textTransform: 'uppercase', fontWeight: 600 }}>vs Dec</div>
-              </div>
-              <div style={{ width: 1, background: C.divider, alignSelf: 'stretch' }} />
-              <div className="text-center flex-1">
-                <div style={{ fontSize: 24, fontWeight: 700, color: C.textPrimary }}>$<AnimNum value={142} /></div>
-                <div style={{ fontSize: 10, color: C.textMuted, marginTop: 2, textTransform: 'uppercase', fontWeight: 600 }}>Est. Bill</div>
-              </div>
-            </div>
-            <div className="px-4 py-3 flex items-center gap-2" style={{ borderTop: `1px solid ${C.divider}`, background: 'rgba(230,247,237,0.5)' }}>
-              <TrendingDown size={14} color={C.green} />
-              <span style={{ fontSize: 12, color: C.green, fontWeight: 600 }}>You used 12% less than similar homes</span>
-            </div>
-          </GlassCard>
-
-          {/* Donut Chart Breakdown */}
-          <GlassCard className="p-5 mb-5" gradient>
-            <div style={{ fontSize: 12, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 16 }}>Energy Breakdown</div>
-            <DonutChart data={bd} />
-          </GlassCard>
+          {/* Energy Breakdown */}
+          <div className="px-5 mb-5">
+            <GlassCard className="p-4" gradient>
+              <div style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>Energy Breakdown</div>
+              <DonutChart data={bd} size={110} />
+            </GlassCard>
+          </div>
 
           {/* Daily Meter Reads */}
-          <div className="mb-5">
+          <div className="px-5 mb-5">
             <MeterReadChart />
           </div>
 
           {/* What Shield Did */}
-          <GlassCard className="mb-5 overflow-hidden" borderLeft gradient>
-            <div className="px-4 py-3" style={{ borderBottom: `1px solid ${C.divider}` }}>
-              <div className="flex items-center gap-2">
-                <Shield size={16} color={C.fplBlue} />
-                <span style={{ fontSize: 12, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.06em' }}>What Shield Did For You</span>
+          <div className="px-5 mb-5">
+            <GlassCard className="overflow-hidden" borderLeft gradient>
+              <div className="px-4 py-2.5" style={{ borderBottom: `1px solid ${C.divider}` }}>
+                <div className="flex items-center gap-2">
+                  <Shield size={14} color={C.fplBlue} />
+                  <span style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.06em' }}>What Shield Did For You</span>
+                </div>
               </div>
-            </div>
-            {[
-              {l:'Thermostat optimizations',v:'14 adjustments'},
-              {l:'FPL On Call® events',v:'3 participated'},
-              {l:'EV charging shifted',v:'12 nights'},
-              {l:'Pool pump rescheduled',v:'18 days'}
-            ].map((a, i) => (
-              <div key={i} className="flex items-center justify-between px-4 py-3.5"
-                style={{ borderBottom: i < 3 ? `1px solid ${C.divider}` : 'none' }}>
-                <span style={{ fontSize: 13, color: C.textSecondary }}>{a.l}</span>
-                <span style={{ fontSize: 13, fontWeight: 700, color: C.textPrimary }}>{a.v}</span>
+              {[
+                {l:'Thermostat optimizations',v:'14 adjustments'},
+                {l:'FPL On Call® events',v:'3 participated'},
+                {l:'EV charging shifted',v:'12 nights'},
+                {l:'Pool pump rescheduled',v:'18 days'}
+              ].map((a, i) => (
+                <div key={i} className="flex items-center justify-between px-4 py-3"
+                  style={{ borderBottom: i < 3 ? `1px solid ${C.divider}` : 'none' }}>
+                  <span style={{ fontSize: 12, color: C.textSecondary }}>{a.l}</span>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: C.textPrimary }}>{a.v}</span>
+                </div>
+              ))}
+              <div className="flex items-center justify-between px-4 py-3" style={{ background: 'rgba(230,247,237,0.5)' }}>
+                <span style={{ fontSize: 13, fontWeight: 700, color: C.green }}>Total Monthly Savings</span>
+                <span style={{ fontSize: 18, fontWeight: 700, color: C.green }}>$<AnimNum value={totalSavings} decimals={2} dur={1200} /></span>
               </div>
-            ))}
-            <div className="flex items-center justify-between px-4 py-4" style={{ background: 'rgba(230,247,237,0.5)' }}>
-              <span style={{ fontSize: 14, fontWeight: 700, color: C.green }}>Total Monthly Savings</span>
-              <span style={{ fontSize: 24, fontWeight: 700, color: C.green }}>$<AnimNum value={totalSavings} decimals={2} dur={1200} /></span>
-            </div>
-          </GlassCard>
+            </GlassCard>
+          </div>
 
           {/* Recommendations */}
-          <div style={{ fontSize: 12, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>
-            Personalized Recommendations
+          <div className="px-5 mb-5">
+            <div style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>
+              Personalized Recommendations
+            </div>
+            {[
+              {t:'Upgrade to SEER 18', d:'FPL HVAC-on-Bill® from $42/mo', cta:'Learn More', color: C.fplBlue},
+              {t:'FPL SurgeShield®', d:'3 surge events near you this month', cta:'$11.95/mo', color: C.red},
+              {t:'FPL SolarTogether®', d:'Community solar · Earn bill credits', cta:'See Estimate', color: C.orange}
+            ].map((r, i) => (
+              <GlassCard key={i} className="p-3.5 mb-2 flex items-center gap-3" gradient>
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${r.color}0D` }}>
+                  <div style={{ width: 7, height: 7, borderRadius: 4, background: r.color }} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div style={{ fontSize: 13, fontWeight: 600, color: C.textPrimary }}>{r.t}</div>
+                  <div style={{ fontSize: 11, color: C.textMuted, marginTop: 1 }}>{r.d}</div>
+                </div>
+                <span style={{ fontSize: 11, color: C.fplBlue, fontWeight: 700, flexShrink: 0 }}>{r.cta} →</span>
+              </GlassCard>
+            ))}
           </div>
-          {[
-            {t:'Upgrade to SEER 18', d:'Save est. $287/yr · FPL HVAC-on-Bill® from $42/mo', cta:'Learn More', color: C.fplBlue},
-            {t:'FPL SurgeShield®', d:'3 surge events near your area this month', cta:'$11.95/mo', color: C.red},
-            {t:'FPL SolarTogether®', d:'Community solar · Earn monthly bill credits', cta:'See Estimate', color: C.orange}
-          ].map((r, i) => (
-            <GlassCard key={i} className="p-4 mb-2.5 flex items-center gap-3" onClick={() => {}} gradient>
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${r.color}0D` }}>
-                <div style={{ width: 8, height: 8, borderRadius: 4, background: r.color }} />
-              </div>
-              <div className="flex-1">
-                <div style={{ fontSize: 14, fontWeight: 600, color: C.textPrimary }}>{r.t}</div>
-                <div style={{ fontSize: 12, color: C.textMuted, marginTop: 2 }}>{r.d}</div>
-              </div>
-              <span style={{ fontSize: 12, color: C.fplBlue, fontWeight: 700, flexShrink: 0 }}>{r.cta} →</span>
-            </GlassCard>
-          ))}
 
-          <div className="text-center py-6">
+          <div className="text-center pb-4">
             <div style={{ fontSize: 10, color: C.textMuted }}>Florida Power & Light Company · A NextEra Energy® Company</div>
-            <div style={{ fontSize: 10, color: C.textMuted, marginTop: 2 }}>Report generated Jan 28, 2026</div>
           </div>
         </Stagger>
         <BottomNav active="Usage" onNav={onNav} />
@@ -2490,86 +2498,101 @@ const Report = ({ onBack, onNav }) => {
 };
 
 /* ─── PROFILE (Updated with Shield Status) ─── */
-const Profile = ({ onBack, onNav }) => (
-  <Screen direction="right">
-    <div className="min-h-screen pb-24" style={{ background: C.bg }}>
-      <FPLHeader />
-      <div className="px-5 pt-4">
-        <Tap onClick={onBack} className="flex items-center gap-1 mb-4">
-          <ChevronLeft size={18} color={C.fplBlue} /><span style={{ fontSize: 13, color: C.fplBlue, fontWeight: 500 }}>Back</span>
-        </Tap>
-        <h1 style={{ fontSize: 24, fontWeight: 300, color: C.textPrimary }}>Account</h1>
-      </div>
-      <Stagger delay={50}>
-        {/* Shield Status Section */}
-        <Section title="Shield Status">
-          <GlassCard className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center"
-                style={{ background: `linear-gradient(135deg, ${C.fplBlue}, ${C.fplDark})` }}>
-                <Shield size={22} color="#fff" />
-              </div>
-              <div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: C.textPrimary }}>Home Energy Shield</div>
-                <div className="flex items-center gap-2 mt-1">
-                  <div style={{ width: 7, height: 7, borderRadius: 4, background: C.green, animation: 'pulseGlow 2s ease-in-out infinite' }} />
-                  <span style={{ fontSize: 12, fontWeight: 600, color: C.green }}>Active · 4 devices protected</span>
+const Profile = ({ onBack, onNav }) => {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => { setTimeout(() => setLoaded(true), 50); }, []);
+  return (
+    <Screen direction="right">
+      <div className={`min-h-screen pb-24 transition-opacity duration-500 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+        style={{ background: C.bg }}>
+        <FPLHeader />
+        <div className="px-5 pt-4">
+          <Tap onClick={onBack} className="flex items-center gap-1 mb-3">
+            <ChevronLeft size={18} color={C.fplBlue} /><span style={{ fontSize: 13, color: C.fplBlue, fontWeight: 500 }}>Back</span>
+          </Tap>
+          <h1 style={{ fontSize: 22, fontWeight: 300, color: C.textPrimary }}>Account</h1>
+          <div style={{ height: 16 }} />
+        </div>
+
+        <Stagger delay={50}>
+          {/* Shield Status */}
+          <div className="px-5 mb-5">
+            <GlassCard className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                  style={{ background: `linear-gradient(135deg, ${C.fplBlue}, ${C.fplDark})` }}>
+                  <Shield size={18} color="#fff" />
+                </div>
+                <div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: C.textPrimary }}>Home Energy Shield</div>
+                  <div className="flex items-center gap-2 mt-1">
+                    <div style={{ width: 6, height: 6, borderRadius: 3, background: C.green, animation: 'pulseGlow 2s ease-in-out infinite' }} />
+                    <span style={{ fontSize: 11, fontWeight: 600, color: C.green }}>Active · 4 devices monitored</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </GlassCard>
-        </Section>
-
-        <Section title="FPL Account">
-          <GlassCard>
-            {[{l:'Account Number',v:'4821-7390-8812'},{l:'Service Address',v:'1247 Royal Palm Way, PBG'},{l:'Rate Schedule',v:'RS-1 Residential'},{l:'Billing Cycle',v:'28th of each month'}].map((r, i) => (
-              <div key={i} className="flex items-center justify-between px-4 py-3" style={{ borderBottom: i<3?`1px solid ${C.divider}`:'none' }}>
-                <span style={{ fontSize: 13, color: C.textMuted }}>{r.l}</span>
-                <span style={{ fontSize: 13, color: C.textPrimary, fontWeight: 500, textAlign: 'right', maxWidth: '55%' }}>{r.v}</span>
-              </div>
-            ))}
-          </GlassCard>
-        </Section>
-        <Section title="Home Profile">
-          <div className="grid grid-cols-2 gap-2.5">
-            {[{l:'Type',v:'Single Family'},{l:'Size',v:'2,400 sq ft'},{l:'Beds / Bath',v:'3 / 2.5'},{l:'Year Built',v:'2016'},{l:'HVAC',v:'SEER 14'},{l:'Pool',v:'12,000 gal'},{l:'Solar',v:'None'},{l:'EV',v:'Tesla Model Y'}].map((f, i) => (
-              <GlassCard key={i} className="py-3 px-4">
-                <div style={{ fontSize: 10, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>{f.l}</div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: C.textPrimary, marginTop: 3 }}>{f.v}</div>
-              </GlassCard>
-            ))}
+            </GlassCard>
           </div>
-        </Section>
-        <Section title="FPL Programs">
-          <GlassCard>
-            {[{n:'FPL On Call® Savings',s:'Enrolled',c:C.green},{n:'FPL Budget Billing®',s:'–',c:C.textMuted},{n:'FPL SurgeShield®',s:'–',c:C.textMuted},{n:'FPL SolarTogether®',s:'Eligible',c:C.amber}].map((p, i) => (
-              <div key={i} className="flex items-center justify-between px-4 py-3" style={{ borderBottom: i<3?`1px solid ${C.divider}`:'none' }}>
-                <span style={{ fontSize: 13, color: C.textPrimary, fontWeight: 500 }}>{p.n}</span>
-                <Pill color={p.c}>{p.s}</Pill>
-              </div>
-            ))}
-          </GlassCard>
-        </Section>
-        <Section title="Settings">
-          <GlassCard>
-            {['Notifications','Privacy & Data','Help & Support','Contact FPL'].map((t, i) => (
-              <Tap key={i} className="w-full flex items-center justify-between px-4 py-3.5"
-                style={{ borderBottom: i<3?`1px solid ${C.divider}`:'none' }}>
-                <span style={{ fontSize: 13, color: C.textSecondary }}>{t}</span>
-                <ChevronRight size={16} color={C.textMuted} />
-              </Tap>
-            ))}
-          </GlassCard>
-        </Section>
-        <div className="text-center mt-4 px-5">
-          <div style={{ fontSize: 10, color: C.textMuted }}>Florida Power & Light Company · A NextEra Energy® Company</div>
-          <div style={{ fontSize: 10, color: C.textMuted, marginTop: 2 }}>FPL Home Energy Manager · Beta v2.1.0</div>
-        </div>
-      </Stagger>
-      <BottomNav active="Account" onNav={onNav} />
-    </div>
-  </Screen>
-);
+
+          <div className="px-5 mb-5">
+            <div style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>FPL Account</div>
+            <GlassCard>
+              {[{l:'Account Number',v:'4821-7390-8812'},{l:'Service Address',v:'1247 Royal Palm Way, PBG'},{l:'Rate Schedule',v:'RS-1 Residential'},{l:'Billing Cycle',v:'28th of each month'}].map((r, i) => (
+                <div key={i} className="flex items-center justify-between px-4 py-2.5" style={{ borderBottom: i<3?`1px solid ${C.divider}`:'none' }}>
+                  <span style={{ fontSize: 12, color: C.textMuted }}>{r.l}</span>
+                  <span style={{ fontSize: 12, color: C.textPrimary, fontWeight: 500, textAlign: 'right', maxWidth: '55%' }}>{r.v}</span>
+                </div>
+              ))}
+            </GlassCard>
+          </div>
+
+          <div className="px-5 mb-5">
+            <div style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>Home Profile</div>
+            <div className="grid grid-cols-2 gap-2">
+              {[{l:'Type',v:'Single Family'},{l:'Size',v:'2,400 sq ft'},{l:'Beds / Bath',v:'3 / 2.5'},{l:'Year Built',v:'2016'},{l:'HVAC',v:'SEER 14'},{l:'Pool',v:'12,000 gal'},{l:'Solar',v:'None'},{l:'EV',v:'Tesla Model Y'}].map((f, i) => (
+                <GlassCard key={i} className="py-2.5 px-3.5">
+                  <div style={{ fontSize: 9, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>{f.l}</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: C.textPrimary, marginTop: 2 }}>{f.v}</div>
+                </GlassCard>
+              ))}
+            </div>
+          </div>
+
+          <div className="px-5 mb-5">
+            <div style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>FPL Programs</div>
+            <GlassCard>
+              {[{n:'FPL On Call® Savings',s:'Enrolled',c:C.green},{n:'FPL Budget Billing®',s:'–',c:C.textMuted},{n:'FPL SurgeShield®',s:'–',c:C.textMuted},{n:'FPL SolarTogether®',s:'Eligible',c:C.amber}].map((p, i) => (
+                <div key={i} className="flex items-center justify-between px-4 py-2.5" style={{ borderBottom: i<3?`1px solid ${C.divider}`:'none' }}>
+                  <span style={{ fontSize: 12, color: C.textPrimary, fontWeight: 500 }}>{p.n}</span>
+                  <Pill color={p.c}>{p.s}</Pill>
+                </div>
+              ))}
+            </GlassCard>
+          </div>
+
+          <div className="px-5 mb-5">
+            <div style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>Settings</div>
+            <GlassCard>
+              {['Notifications','Privacy & Data','Help & Support','Contact FPL'].map((t, i) => (
+                <Tap key={i} className="w-full flex items-center justify-between px-4 py-3"
+                  style={{ borderBottom: i<3?`1px solid ${C.divider}`:'none' }}>
+                  <span style={{ fontSize: 12, color: C.textSecondary }}>{t}</span>
+                  <ChevronRight size={14} color={C.textMuted} />
+                </Tap>
+              ))}
+            </GlassCard>
+          </div>
+
+          <div className="text-center pb-4">
+            <div style={{ fontSize: 10, color: C.textMuted }}>Florida Power & Light Company · A NextEra Energy® Company</div>
+            <div style={{ fontSize: 10, color: C.textMuted, marginTop: 2 }}>FPL Home Energy Manager · v21</div>
+          </div>
+        </Stagger>
+        <BottomNav active="Account" onNav={onNav} />
+      </div>
+    </Screen>
+  );
+};
 
 /* ═══════ APP ═══════ */
 export default function App() {
@@ -2597,9 +2620,6 @@ export default function App() {
         {screen === 'report' && <Report onBack={() => go('dashboard')} onNav={nav} />}
         {screen === 'profile' && <Profile onBack={() => go('dashboard')} onNav={nav} />}
         {screen === 'impact' && <CommunityImpact onBack={() => go('dashboard')} onNav={nav} />}
-
-        {/* Demo Control Panel FAB + Panel (visible on dashboard, report, profile, impact) */}
-        {['dashboard', 'report', 'profile', 'impact'].includes(screen) && <DemoControlPanel />}
 
         {/* AI Chat FAB + Chat Panel (visible on dashboard, report, profile, impact) */}
         {['dashboard', 'report', 'profile', 'impact'].includes(screen) && !chatOpen && <AIChatFAB onClick={() => setChatOpen(true)} />}
